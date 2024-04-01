@@ -1,7 +1,7 @@
 from utils import image_capture, camera_calibration
 from aruco import Aruco
 
-image_capture(30)
+# image_capture(30)
 
 camera_calibration()
 

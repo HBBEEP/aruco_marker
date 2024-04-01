@@ -20,7 +20,7 @@ class Aruco():
             plt.axis("off")
             plt.show()
 
-    def aruco_display(corners, ids, rejected, image):
+    def aruco_display(self, corners, ids, rejected, image):
     
         if len(corners) > 0:
             
@@ -72,10 +72,7 @@ class Aruco():
         return  self.tvec, self.rvec
     
     def load_calibration(self):
-        # self.intrinsic_camera = np.array(((933.15867, 0, 657.59),(0,933.1586, 400.36993),(0,0,1)))
-        # self.distortion = np.array((-0.43948,0.18514,0,0))
-        # print(self.intrinsic_camera, self.distortion)
-        
+
         with open('config\calibration.yaml', 'r') as stream:
             data = yaml.safe_load(stream)
 

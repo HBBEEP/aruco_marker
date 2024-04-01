@@ -14,28 +14,29 @@ arucoParams = cv2.aruco.DetectorParameters()
 
 aruco_marker = Aruco()
 
+
 while cap.isOpened():
     ret, frame = cap.read()
-    frame_out = aruco_marker.pose_estimation(frame, ARUCO_DICT[aruco_type])
-    tvec, rvec = aruco_marker.get_transformation_matrix()
-    print(tvec, rvec)
-    # Calculate the size of the bounding box
-    bbox_width = 1280 // 2
-    bbox_height = 720 // 2
 
-    # Calculate the coordinates of the bounding box
-    x1 = (1280 - bbox_width) // 2
-    y1 = (720 - bbox_height) // 2
-    x2 = x1 + bbox_width
-    y2 = y1 + bbox_height
+    # if (mode == 0):
+    # tvec, rvec = aruco_marker.get_transformation_matrix()
+    # print(tvec, rvec)
 
-    # Draw the bounding box on the frame
-    cv2.rectangle(frame_out, (x1, y1), (x2, y2), (0, 255, 0), 2)
-    cv2.imshow('Aruco Detector', frame_out)
+    corners, ids, rejected = cv2.aruco.detectMarkers(frame, arucoDict, parameters=arucoParams)
+    
+    frame = aruco_marker.aruco_display(corners, ids, rejected, frame)
 
-    # if (tvec and rvec is not None):
-    #     print(f"Translation : {tvec}")
-    #     print(f"Rotation : {rvec}")
+    frame = aruco_marker.pose_estimation(frame, ARUCO_DICT[aruco_type])
+    # bbox_width = 1280 // 2
+    # bbox_height = 720 // 2
+
+    # x1 = (1280 - bbox_width) // 2
+    # y1 = (720 - bbox_height) // 2
+    # x2 = x1 + bbox_width
+    # y2 = y1 + bbox_height
+    # cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    cv2.imshow('Aruco Detector', frame)
+
 
     key = cv2.waitKey(100) & 0xFF
     if key == ord('q'):
